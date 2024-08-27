@@ -1,4 +1,6 @@
-const Cart = ({ cart }) => {
+const Cart = ({ cart, setCart }) => {
+  console.log(cart, setCart);
+
   if (cart.length === 0) {
     return (
       <div className="cart-empty">
@@ -21,7 +23,22 @@ const Cart = ({ cart }) => {
                 <div className="item-counter">
                   <button>-</button>
                   <span>{item.counter}</span>
-                  <button>+</button>
+                  <button
+                    onClick={() => {
+                      const cartCopy = [...cart];
+
+                      const isInCart = cartCopy.find((elem) => {
+                        return item.title === elem.title;
+                      });
+                      console.log(isInCart);
+                      if (isInCart) {
+                        isInCart.counter++;
+                      }
+                      setCart(isInCart.counter);
+                    }}
+                  >
+                    +
+                  </button>
                 </div>
                 <div className="item-info">
                   <div className="item-name">

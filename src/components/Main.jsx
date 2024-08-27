@@ -20,13 +20,22 @@ const Main = ({ categories }) => {
                           key={meal.id}
                           className="meal"
                           onClick={() => {
-                            let counter = 1;
                             const cartCopy = [...cart];
-                            cartCopy.push({
-                              title: meal.title,
-                              price: meal.price,
-                              counter: counter,
+
+                            const isInCart = cartCopy.find((item) => {
+                              return item.title === meal.title;
                             });
+                            console.log(isInCart);
+                            if (isInCart) {
+                              isInCart.counter++;
+                            } else {
+                              cartCopy.push({
+                                title: meal.title,
+                                price: meal.price,
+                                counter: 1,
+                              });
+                            }
+
                             setCart(cartCopy);
                           }}
                         >
@@ -47,7 +56,7 @@ const Main = ({ categories }) => {
           })}
         </div>
         <div className="cart-column">
-          <Cart cart={cart} />
+          <Cart cart={cart} setCart={setCart} />
         </div>
       </div>
     </main>
